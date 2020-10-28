@@ -131,10 +131,35 @@ var powerOfTwo = function(n) {
 
 // 9. Write a function that reverses a string.
 var reverse = function(string) {
+  // Appraoch
+  // returns last letter plus result of function
+
+
+  // Base Case
+  // string length === 1
+  if (string.length === 1) {
+    return string;
+  }
+  // Recursive Case
+  let lastIndex = string.length - 1;
+  return  string[lastIndex] + reverse(string.substring(0,lastIndex));
 };
 
 // 10. Write a function that determines if a string is a palindrome.
 var palindrome = function(string) {
+  string = string.toLowerCase().replaceAll(' ', '');
+  if (string.length <= 1) {
+    return true;
+  }
+
+  // If first and last are equal
+  let lastIndex = string.length - 1;
+  if (string[0] === string[lastIndex]) {
+    // recurse - first & last chars
+    return palindrome(string.substring(1,lastIndex));
+  } else {// otherwise
+    return false;
+  }
 };
 
 // 11. Write a function that returns the remainder of x divided by y without using the
