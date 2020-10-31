@@ -310,16 +310,16 @@ var fizzBuzz = function(n) {
 // 20. Count the occurence of a value in a list.
 // countOccurrence([2,7,4,4,1,4], 4) // 3
 // countOccurrence([2,'banana',4,4,1,'banana'], 'banana') // 2
-var countKeysInObj = function(array, value) {
+var countOccurrence = function(array, value) {
   if (array.length === 0) {
     return 0;
   }
 
   let newSlice = array.slice(1);
   if (array[0] === value) {
-    return 1 + countKeysInObj(newSlice, value);
+    return 1 + countOccurrence(newSlice, value);
   } else  {
-    return 0 + countKeysInObj(newSlice, value);
+    return 0 + countOccurrence(newSlice, value);
   }
 };
 
