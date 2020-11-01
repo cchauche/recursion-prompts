@@ -426,11 +426,28 @@ var nthFibo = function(n) {
 // var words = ['i', 'am', 'learning', 'recursion'];
 // capitalizedWords(words); // ['I', 'AM', 'LEARNING', 'RECURSION']
 var capitalizeWords = function(array) {
+  if (array.length === 1) {
+    return [array[0].toUpperCase()];
+  }
+  let newSlice = array.slice(0,array.length - 1);
+  let capitalized = capitalizeWords(newSlice);
+  capitalized.push(array[array.length - 1].toUpperCase());
+  return capitalized;
 };
 
 // 28. Given an array of strings, capitalize the first letter of each index.
 // capitalizeFirst(['car','poop','banana']); // ['Car','Poop','Banana']
 var capitalizeFirst = function(array) {
+  // 'colin'[0].toUpperCase() + 'colin'.substring(1)
+  if (array.length === 1) {
+    let word = array[0];
+    return [word[0].toUpperCase() + word.substring(1)];
+  }
+  let newSlice = array.slice(0,array.length - 1);
+  let capitalized = capitalizeFirst(newSlice);
+  let word = array[array.length - 1];
+  capitalized.push(word[0].toUpperCase() + word.substring(1));
+  return capitalized;
 };
 
 // 29. Return the sum of all even numbers in an object containing nested objects.
@@ -443,11 +460,34 @@ var capitalizeFirst = function(array) {
 // };
 // nestedEvenSum(obj1); // 10
 var nestedEvenSum = function(obj) {
+  // if its not an object
+  let sum = 0;
+  if (typeof obj !== 'object') {
+    if (obj % 2 === 0) {
+      return obj;
+    } else {
+      return 0;
+    }
+  }
+  // Ohterwise
+  for (let key in obj) {
+    // Iterate over it and sum the result of this function
+    sum += nestedEvenSum(obj[key]);
+  }
+  return sum;
 };
 
 // 30. Flatten an array containing nested arrays.
 // flatten([1,[2],[3,[[4]]],5]); // [1,2,3,4,5]
 var flatten = function(array) {
+  let flattened = [];
+  if (!Array.isArray(array)) {
+    return [array];
+  }
+  for (let i = 0; i < array.length; i++) {
+    flattened = flattened.concat(flatten(array[i]));
+  }
+  return flattened;
 };
 
 // 31. Given a string, return an object containing tallies of each letter.
