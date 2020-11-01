@@ -396,6 +396,14 @@ var replaceKeysInObj = function(obj, oldKey, newKey) {
 // fibonacci(5); // [0,1,1,2,3,5]
 // Note: The 0 is not counted.
 var fibonacci = function(n) {
+  if (n <= 0) {
+    return null;
+  } else if (n === 1) {
+    return [0, 1];
+  }
+  let fib = fibonacci(n - 1);
+  fib.push(fib[fib.length - 1] + fib[fib.length - 2]);
+  return fib;
 };
 
 // 26. Return the Fibonacci number located at index n of the Fibonacci sequence.
@@ -404,6 +412,14 @@ var fibonacci = function(n) {
 // nthFibo(7); // 13
 // nthFibo(3); // 2
 var nthFibo = function(n) {
+  if (n < 0) {
+    return null;
+  } else if (n === 0) {
+    return 0;
+  } else if (n === 1) {
+    return 1;
+  }
+  return nthFibo(n -1 ) + nthFibo(n - 2 < 0 ? 0 : n - 2);
 };
 
 // 27. Given an array of words, return a new array containing each word capitalized.
