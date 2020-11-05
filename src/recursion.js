@@ -493,6 +493,31 @@ var flatten = function(array) {
 // 31. Given a string, return an object containing tallies of each letter.
 // letterTally('potato'); // {p:1, o:2, t:2, a:1}
 var letterTally = function(str, obj) {
+  // Return empty object if empty string passed in
+  obj = obj || {};
+  if (str.length === 0) {
+    return {};
+  }
+  // grab first char
+  let char = str[0];
+  // Test if it exists in obj
+  if (obj[char] === undefined) {
+    // Add if it doesn't exit and set to 1
+    obj[char] = 1;
+  } else {
+  // Incrse value of key value by 1
+  obj[char]++;
+  }
+
+  // Recursive Case
+  // str has more than 1 character
+  if (str.length > 1) {
+    // increse count or add key and set value to 1
+    letterTally(str.substring(1), obj);
+  }
+  // Base Case
+  return obj;
+
 };
 
 // 32. Eliminate consecutive duplicates in a list. If the list contains repeated
@@ -501,18 +526,56 @@ var letterTally = function(str, obj) {
 // compress([1,2,2,3,4,4,5,5,5]) // [1,2,3,4,5]
 // compress([1,2,2,3,4,4,2,5,5,5,4,4]) // [1,2,3,4,2,5,4]
 var compress = function(list) {
+  //Base Case
+  // list length ===0
+  if (list.length === 0) {
+    return [];
+  }
+  // get first element
+  let el = list[0];
+  // If it does not equal the next element
+  if (el !== list[1]) {
+    // Add it and make recursive call removing 1st element
+    return [el].concat(compress(list.slice(1)));
+  } else { // Otherwise
+    // return recursive call without adding element
+    return compress(list.slice(1));
+  }
 };
 
 // 33. Augment every element in a list with a new value where each element is an array
 // itself.
 // augmentElements([[],[3],[7]], 5); // [[5],[3,5],[7,5]]
 var augmentElements = function(array, aug) {
+  if (array.length === 0) {
+    return [];
+  }
+  let auged = array[0]
+  auged.push(aug);
+  if (array.length === 1) {
+    return [auged];
+  }
+  let result = augmentElements(array.slice(1), aug);
+  result.unshift(auged);
+  return result;
 };
 
 // 34. Reduce a series of zeroes to a single 0.
 // minimizeZeroes([2,0,0,0,1,4]) // [2,0,1,4]
 // minimizeZeroes([2,0,0,0,1,0,0,4]) // [2,0,1,0,4]
 var minimizeZeroes = function(array) {
+  if (array.length === 1) {
+    return array[0];
+  } else if (array.length === 0) {
+    return [];
+  }
+
+  let first = array[0];
+  if (first === 0 && array[1] === 0) {
+    return minimizeZeroes(array.slice(1));
+  } else {
+    return [first].concat(minimizeZeroes(array.slice(1)));
+  }
 };
 
 // 35. Alternate the numbers in an array between positive and negative regardless of
@@ -520,6 +583,17 @@ var minimizeZeroes = function(array) {
 // alternateSign([2,7,8,3,1,4]) // [2,-7,8,-3,1,-4]
 // alternateSign([-2,-7,8,3,-1,4]) // [2,-7,8,-3,1,-4]
 var alternateSign = function(array) {
+  if (array.length === 0) {
+    return [];
+  } else if (array.length === 1) {
+    return [Math.abs(array[0])];
+  }
+  let inputCopy = array.slice();
+  let currentEl = Math.abs(inputCopy.pop());
+  let previousNums = alternateSign(inputCopy);
+  let lastPrevious = previousNums[previousNums.length - 1];
+  currentEl = (- lastPrevious * currentEl) / Math.abs(lastPrevious);
+  return previousNums.concat(currentEl);
 };
 
 // 36. Given a string, return a string with digits converted to their word equivalent.
