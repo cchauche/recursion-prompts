@@ -600,6 +600,28 @@ var alternateSign = function(array) {
 // Assume all numbers are single digits (less than 10).
 // numToText("I have 5 dogs and 6 ponies"); // "I have five dogs and six ponies"
 var numToText = function(str) {
+  const numWords = {
+    1 : 'one',
+    2 : 'two',
+    3 : 'three',
+    4 : 'four',
+    5 : 'five',
+    6 : 'six',
+    7 : 'seven',
+    8 : 'eight',
+    9 : 'nine',
+  };
+
+  let result = str[0];
+  let digit = parseInt(result);
+  if (!isNaN(digit)) {
+    result = numWords[digit];
+  }
+  if (str.length === 1) {
+    return result;
+  } else {
+    return result + numToText(str.substring(1));
+  }
 };
 
 
